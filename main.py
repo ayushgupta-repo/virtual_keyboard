@@ -20,24 +20,44 @@ cap.set(4, 720)  # height
 # providing higher confidence value as by mistake key does not get pressed
 detector = handDetector(detectionCon=0.8)
 
+# alphabets list
+keys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+        ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';'],
+        ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/']]
+
+# to draw
+
+
+def drawALL(img, buttonList):
+
+    for button in buttonList:
+        x, y = button.pos
+        w, h = button.size
+        # Creating rectangular boxes that contains font
+        cv2.rectangle(img, button.pos, (x+w, y+h), (255, 0, 255), cv2.FILLED)
+
+        # putting text on the image
+        cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN,
+                    4, (255, 255, 255), 4)
+
+    return img
+
 
 class Button():
     def __init__(self, pos, text, size=[85, 85]):
         self.pos = pos
         self.size = size
         self.text = text
-        x, y = self.pos
-        w, h = self.size
-        # Creating rectangular boxes that contains font
-        cv2.rectangle(img, self.pos, (x+w, y+h), (255, 0, 255), cv2.FILLED)
-
-        # putting text on the image
-        cv2.putText(img, self.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN,
-                    4, (255, 255, 255), 4)
 
 
 # Creating button list
 buttonList = []
+# creating mulitple rows
+for i in range(len(keys)):
+    # Creating buttons object with loop
+    for j, key in enumerate(keys[i]):
+        buttonList.append(Button([100*j+50, 100*i+50], key))
+
 
 while True:
     success, img = cap.read()
@@ -47,13 +67,7 @@ while True:
 
     lmList = detector.findPosition(img, False)
 
-    # Creating buttons object with loop
-    for x in range(0, 5):
-        buttonList.append(Button([100*x+50, 100], "Q"))
-
-    # img = myButton.draw(img)
-    # img = myButton1.draw(img)
-    # img = myButton2.draw(img)
+    img = drawALL(img, buttonList)
 
     cv2.imshow('Image', img)
     cv2.waitKey(1)

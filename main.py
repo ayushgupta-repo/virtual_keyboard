@@ -67,6 +67,24 @@ while True:
 
     img = drawALL(img, buttonList)
 
+    # checking for hand
+    if lmList:
+        for button in buttonList:
+            x, y = button.pos
+            w, h = button.size
+
+            # to check our finger is in between or not using landmarks
+
+            # hand_number[hand_landmark][x(1) or y(2)]
+            if x < lmList[8][1] < x+w and y < lmList[8][2] < y+h:
+                # Creating rectangular boxes that contains font
+                cv2.rectangle(img, button.pos, (x+w, y+h),
+                              (0, 255, 0), cv2.FILLED)
+
+                # putting text on the image
+                cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN,
+                            4, (255, 255, 255), 4)
+
     cv2.imshow('Image', img)
     cv2.waitKey(1)
 

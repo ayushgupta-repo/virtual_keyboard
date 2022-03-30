@@ -77,19 +77,31 @@ while True:
 
             # hand_number[hand_landmark][x(1) or y(2)]
             if x < lmList[8][1] < x+w and y < lmList[8][2] < y+h:
-                # Creating rectangular boxes that contains font
+                # Creating rectangular boxes that contains font and making dark purple
                 cv2.rectangle(img, button.pos, (x+w, y+h),
-                              (0, 255, 0), cv2.FILLED)
+                              (175, 0, 175), cv2.FILLED)
 
                 # putting text on the image
                 cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN,
                             4, (255, 255, 255), 4)
 
+                # getting distance between landmark 8 and 12
                 # for ignoring other parameters we used '_' with x and y positions as index 1 and 2
                 l, _, _ = detector.findDistance(
                     lmList[8][1:3], lmList[12][1:3], img)
 
                 print(l)
+
+                # setting the range for the click based on the landmarks
+
+                if l < 60:
+                    # Creating rectangular boxes that contains font and making green
+                    cv2.rectangle(img, button.pos, (x+w, y+h),
+                                  (0, 255, 0), cv2.FILLED)
+
+                    # putting text on the image
+                    cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN,
+                                4, (255, 255, 255), 4)
 
     cv2.imshow('Image', img)
     cv2.waitKey(1)

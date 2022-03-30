@@ -85,6 +85,12 @@ while True:
                 cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN,
                             4, (255, 255, 255), 4)
 
+                # for ignoring other parameters we used '_' with x and y positions as index 1 and 2
+                l, _, _ = detector.findDistance(
+                    lmList[8][1:3], lmList[12][1:3], img)
+
+                print(l)
+
     cv2.imshow('Image', img)
     cv2.waitKey(1)
 

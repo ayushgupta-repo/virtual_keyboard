@@ -7,6 +7,7 @@
 # importing packages and libraries
 import cv2
 from HandTrackingModule import handDetector
+from time import sleep
 
 # using webcam as it's id is 0 to create video capturing device
 cap = cv2.VideoCapture(0)
@@ -24,6 +25,8 @@ detector = handDetector(detectionCon=0.8)
 keys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
         ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';'],
         ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/']]
+
+finalText = ''
 
 
 def drawALL(img, buttonList):
@@ -102,6 +105,19 @@ while True:
                     # putting text on the image
                     cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN,
                                 4, (255, 255, 255), 4)
+
+                    finalText += button.text
+
+                    # to count the number of clicking of button
+                    sleep(0.15)
+
+    # Creating rectangular boxes that contains font and making dark purple
+    cv2.rectangle(img, (50, 350), (700, 450),
+                  (175, 0, 175), cv2.FILLED)
+
+    # putting text on the image
+    cv2.putText(img, finalText, (60, 430), cv2.FONT_HERSHEY_PLAIN,
+                5, (255, 255, 255), 5)
 
     cv2.imshow('Image', img)
     cv2.waitKey(1)

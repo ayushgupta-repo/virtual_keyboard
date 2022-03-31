@@ -85,7 +85,7 @@ while True:
             # hand_number[hand_landmark][x(1) or y(2)]
             if x < lmList[8][1] < x+w and y < lmList[8][2] < y+h:
                 # Creating rectangular boxes that contains font and making dark purple
-                cv2.rectangle(img, button.pos, (x+w, y+h),
+                cv2.rectangle(img, (x-5, y-5), (x+w+5, y+h+5),
                               (175, 0, 175), cv2.FILLED)
 
                 # putting text on the image

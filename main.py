@@ -8,6 +8,7 @@
 import cv2
 from HandTrackingModule import handDetector
 from time import sleep
+from pynput.keyboard import Controller
 
 # using webcam as it's id is 0 to create video capturing device
 cap = cv2.VideoCapture(0)
@@ -28,12 +29,15 @@ keys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
 
 finalText = ''
 
+keyboard = Controller()
+
 
 def drawALL(img, buttonList):
 
     for button in buttonList:
         x, y = button.pos
         w, h = button.size
+
         # Creating rectangular boxes that contains font
         cv2.rectangle(img, button.pos, (x+w, y+h), (255, 0, 255), cv2.FILLED)
 
@@ -98,6 +102,7 @@ while True:
                 # setting the range for the click based on the landmarks
 
                 if l < 60:
+                    keyboard.press(button.text)
                     # Creating rectangular boxes that contains font and making green
                     cv2.rectangle(img, button.pos, (x+w, y+h),
                                   (0, 255, 0), cv2.FILLED)
